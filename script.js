@@ -8,6 +8,10 @@ const canvasOffsetY = canvas.offsetTop;
 canvas.width = window.innerWidth - canvasOffsetX;
 canvas.height = window.innerHeight - canvasOffsetY;
 
+
+
+
+var array1=[];
 let isPainting = false;
 let lineWidth = 5;
 let startX;
@@ -40,6 +44,10 @@ const draw = (e) => {
 
     ctx.lineTo(e.clientX - canvasOffsetX, e.clientY-canvasOffsetY);
     ctx.stroke();
+    
+    
+
+
 }
 
 canvas.addEventListener('mousedown', (e) => {
@@ -53,25 +61,48 @@ canvas.addEventListener('mouseup', e => {
     ctx.stroke();
     ctx.beginPath();
 });
-document.querySelector('#download').addEventListener('click', ()=> {
-    ctx.save();
-   
-  
-    
-  })
-  document.querySelector('#restore').addEventListener('click', ()=> {
-    
-   isCalledLater()
-  
-    
-  })
+var array=[];
+const save = document.getElementById('save');
+save.addEventListener("click", ()=>{
+    array.push(canvas.toDataURL("image/png"));
+    localStorage.setItem("paints",JSON.stringify(array))
+})
 
-  function isCalledLater(){
-    var canvas = document.getElementById('cv');
-    var ctx = canvas.getContext('2d');          //Get canvas and context
-    ctx.restore(); //So this should restore the canvas to what I save earlier, right?
-    ctx.save();  // this will save once again           
-    }
 
+let startingX;
+let startingY;
+let point1X;
+let point1Y;
+let point2X;
+let point2Y;
+let endX;
+let endY;
+
+
+function getPoints(e) {
+    var i =0;
+    
+    array1.push(e.clientX - canvasOffsetX, e.clientY-canvasOffsetY);
+    i++;
+    
+
+
+}
+
+
+
+
+
+
+
+ctx.beginPath();
+ctx.moveTo(30, 30);
+ctx.bezierCurveTo(120,160, 180,10, 220,140);
+ctx.stroke();
+
+
+
+
+  
 
 canvas.addEventListener('mousemove', draw);
